@@ -1,4 +1,4 @@
-nav* {
+nav * {
 	margin: 0;
 	padding: 0;
 }
@@ -127,7 +127,7 @@ input#consulta {
 #ErrorMsgs {
 	line-height: 1.5em;
 	color:#f61;
-	font-size: smaler;
+	font-size: smaller;
 }
 #ErrorMsgs>span:first-child { font-weight: 600; }
 
@@ -146,3 +146,11 @@ input#consulta {
 option {
 	text-transform: capitalize;
 }
+
+/* Comentarios */
+.subtitulo { 
+	color: blue; 
+	text-decoration: underline;
+	font-weight: 600;
+}
+#comentarios { color: darkblue; }

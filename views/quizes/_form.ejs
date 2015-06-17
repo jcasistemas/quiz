@@ -5,6 +5,7 @@
 <label for="resp" class="rem">Respuesta: </label>
 <input type="text" id="resp" name="quiz[respuesta]"
 	<%= etiqueta %>="<%= quiz.respuesta %>" placeholder="Respuesta"/><p>
+
 Tema: <select name="quiz[tema]">
 <%
 var losT = ["Otro", "Humanidades", "Ocio", "Ciencia", "Tecnologia" ];
@@ -22,5 +23,7 @@ for( var i in losT ) {
   <option value="ciencia" <%= elS[3] %> > <%= losT[3] %> </option>
   <option value="tecnologia" <%= elS[4] %> > <%= losT[4] %> </option>
 </select><p>
+
+<input type="hidden" value="<%= quiz.pregunta %>" name="preguntar"/>
 <a href="/quizes"><button type="button">Cancelar</button></a>
 <input type="submit" value="Guardar" id="pr" />

@@ -53,6 +53,4 @@ li {list-style-type: none;}
 #ErrorMsgs>span:first-child { display: none; }
 
 /* Tema */
-#preguntas tr td{
-	display: flex;
-}
+#preguntas tr td { display: flex; }

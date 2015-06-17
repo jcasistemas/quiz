@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-// Version 2 - Importar el controlador
+// Paso 2 - Importar el controlador
 var quizController = require('../controllers/quiz_controller');
+// Paso 15 - Importar el controlador
+var commentController = require('../controllers/comment_controller');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -25,8 +27,12 @@ router.post('/quizes/create',               quizController.create);
 router.get('/quizes/:quizId(\\d+)/edit',    quizController.edit);
 router.put('/quizes/:quizId(\\d+)',         quizController.update);
 
-// Paso 16 - Borrar
+// Paso 14 - Borrar
 router.delete('/quizes/:quizId(\\d+)',		quizController.destroy);
+
+// Paso 15 - Crear comentarios
+router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
+router.post('/quizes/:quizId(\\d+)/comments',   commentController.create);
 
 // colocar buscador (Fin Tema 9)
 router.get('/quizes/search',                quizController.buscar);

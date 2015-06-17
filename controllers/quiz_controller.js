@@ -3,7 +3,12 @@ var models = require('../models/models.js'); // Dirección del modelo
 
 // Autoload - Se refactoriza el código si la ruta incluye :quizId
 exports.load = function(req, res, next, quizId) {
-  models.Quiz.find(quizId).then( function(quiz) {
+  models.Quiz.find( 
+	  	{ where: { id: Number(quizId) },
+	  	  include: [ { model:models.Comment}]
+	  	}
+
+  	).then( function(quiz) {
       if (quiz) {
         req.quiz = quiz;
         next();
@@ -14,7 +19,7 @@ exports.load = function(req, res, next, quizId) {
 		res.render('quizes/respuesta', { quizId: quizId, respuesta: 'Error', errors: [] });
       }
     }
-  ).catch(function(error) { next(error);});
+  ).catch(function(error) { next(error); });
 };
 
 // GET /quizes
@@ -47,9 +52,7 @@ exports.new = function(req, res) {
 };
 exports.create = function(req, res) {
 	var quiz = models.Quiz.build( req.body.quiz );
-	
-console.log("***", quiz );
-
+//console.log("\n", quiz, "\n" );
 
 	// Paso 12 - Validación de error (Campo vacio)
 	// Funciona al Instalar sequielize@2.0.0
@@ -84,8 +87,8 @@ exports.update = function( req, res) {
   req.quiz.respuesta = req.body.quiz.respuesta.trim();
   req.quiz.tema = req.body.quiz.tema.trim();
 
-console.log("***", req.quiz );
-console.log("***", req.body.quiz );
+// console.log("\n", req.quiz, "\n" );
+// console.log("\n", req.body.quiz, "\n" );
 
   req.quiz.validate().then( function(err){
       if( err ) {
@@ -122,7 +125,7 @@ exports.buscar = function( req, res) {
 		if( req.query.search.length === 0 ) {
 			res.render('quizes/index', { quizes: {}, subtitulo: "Escriba algun texto a buscar", errors: [] });
 		} else {
-console.log("Largo=" + req.query.search.length )
+// console.log("Largo=" + req.query.search.length )
 			// Procesar el texto recibido a un formato adecuado para la búsquda
 			cadena = req.query.search;
 			console.log("\nRecibi: '" + cadena + "'" );
