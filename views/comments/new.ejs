@@ -1,0 +1,10 @@
+<h3>Añadir Comentario a la pregunta:</h3>
+<h4 class="subtitulo">¿<%= pregunta %>?</h4>
+<form method="post" action="/quizes/<%= quizId %>/comments" id="comm">
+	<input type="text" id="comment" name="comment[texto]" value="" placeholder="Su comentario"> 
+	<input type="hidden" value="<%= pregunta %>" name="pregunta"/>	
+	<button type="submit">Guardar comentario</button>
+</form>
+<p><a href="/quizes/<%= quizId%>"><button>Retornar a la pregunta</button></a>
+
+

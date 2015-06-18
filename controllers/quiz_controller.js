@@ -52,8 +52,6 @@ exports.new = function(req, res) {
 };
 exports.create = function(req, res) {
 	var quiz = models.Quiz.build( req.body.quiz );
-//console.log("\n", quiz, "\n" );
-
 	// Paso 12 - Validación de error (Campo vacio)
 	// Funciona al Instalar sequielize@2.0.0
 	quiz.validate().then( function(err){
