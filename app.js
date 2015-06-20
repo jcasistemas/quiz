@@ -5,10 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-// 6- Layouts
+// Paso 6- Layouts
 var partials = require('express-partials');
-// 12- Editar
+// Paso 12- Editar
 var methodOverride = require('method-override');
+var session = require('express-session');
 
 var routes = require('./routes/index');
 
@@ -21,7 +22,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-//6- Layouts
+// Paso 6- Layouts
 app.use(partials());
 
 // Descomentada para Version 1 o colocar Link Rel en la vista html
@@ -31,15 +32,30 @@ app.use(partials());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 
-//Paso 11 - Crear preguntas
+// Paso 11 - Crear preguntas
 // Se coloca en true o se elimina para que guarde los campos que le dice el controlador
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 
-// 12- edit
+// Paso 16 - Autenticación y Sesión
+app.use(cookieParser('LaGata'));
+app.use(session());
+
+// Paso 12- edit
 app.use( methodOverride('_method') );
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Paso 16 - Autenticación y Sesión
+app.use( function(req, res, next) {
+    // Guarda ruta en seesion.redir para usarla luego de hacer login
+    if( !req.path.match(/\/login|\/logout/) ) {
+        req.session.redir = req.path;
+    }
+
+    // Hacer visible req.session en las vistas - Variable global locals
+    res.locals.session = req.session;
+    next();
+})
 
 app.use('/', routes);
 

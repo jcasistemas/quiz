@@ -1,10 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-// Paso 2 - Importar el controlador
+// Paso 2 - Importar el controlador de quizes
 var quizController = require('../controllers/quiz_controller');
-// Paso 15 - Importar el controlador
+// Paso 15 - Importar el controlador de comentarios
 var commentController = require('../controllers/comment_controller');
+// Paso 16 - Autenticación y Sesión
+// Importar el controlador de sesiones
+var sessionController = require('../controllers/session_controller');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -14,6 +17,11 @@ router.get('/', function(req, res) {
 // Paso 8 - Autoload
 // Autoload de comandos con el parametro :quizId
 router.param('quizId', quizController.load);
+
+//Paso 16 - Autenticación y Sesión
+router.get('/login', 	sessionController.new); // Formulario Inicio Sesión (Login)
+router.post('/login', 	sessionController.create); // Crear Sesion
+router.get('/logout', 	sessionController.destroy); // Destruir sesión
 
 // Paso 9 - Multiples preguntas
 // Definición de rutas de /quizes

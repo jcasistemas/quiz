@@ -154,3 +154,13 @@ option {
 	font-weight: 600;
 }
 #comentarios { color: darkblue; }
+
+/* Session */
+
+.right {
+	float: right;
+	margin-right: 5px;
+	margin-top: 1.7em;
+	background-color: white;
+	padding: 0 0.5em;
+}

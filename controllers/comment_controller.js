@@ -1,12 +1,10 @@
-// GET /quizes/pregunta
-var models = require('../models/models.js'); // Dirección del modelo
+var models = require('../models/models.js');
 
-//Paso 15 - Crear Comentario
 // GET /quizes/:quizId/comments/new
 exports.new = function(req, res) {
-	var comment = models.Comment.build();
 	res.render('comments/new', { quizId: req.params.quizId, pregunta: req.query.pregunta, errors: [] } );
 };
+
 // POST /quizes/:quizId/comments
 exports.create = function(req, res) {
 	var comment = models.Comment.build( {
