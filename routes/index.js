@@ -28,12 +28,14 @@ router.get('/logout', 	sessionController.destroy); // Destruir sesión
 router.get('/quizes',                      	quizController.index);
 router.get('/quizes/:quizId(\\d+)',        	quizController.show);
 router.get('/quizes/:quizId(\\d+)/respuesta', quizController.respuesta);
+
+// Paso 17 - Autorización - Introducir MW sessionController.loginRequired, 
 //Paso 11 - Crear preguntas
-router.get('/quizes/new',                   quizController.new);
-router.post('/quizes/create',               quizController.create);
+router.get('/quizes/new',    			sessionController.loginRequired, quizController.new);
+router.post('/quizes/create',         	sessionController.loginRequired, quizController.create);
 // Paso 13 - Edición
-router.get('/quizes/:quizId(\\d+)/edit',    quizController.edit);
-router.put('/quizes/:quizId(\\d+)',         quizController.update);
+router.get('/quizes/:quizId(\\d+)/edit', sessionController.loginRequired, quizController.edit);
+router.put('/quizes/:quizId(\\d+)',    	sessionController.loginRequired, quizController.update);
 
 // Paso 14 - Borrar
 router.delete('/quizes/:quizId(\\d+)',		quizController.destroy);

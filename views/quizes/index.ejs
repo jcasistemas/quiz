@@ -4,7 +4,7 @@
 <!-- colocar buscador (Fin Tema 9) -->
 <div id="search" >
 	<form action="/quizes/search" method="get" >
-		<input type="text" name="search" placeholder="Texto a buscar" id="consulta" title="Buscar las preguntas que contengan ..." />
+		<input type="search" name="search" placeholder="Texto a buscar" id="consulta" title="Buscar las preguntas que contengan ..." />
 		<button type="submit" title="Efectuar Busqueda" alt="Boton de Busqueda" />
 			<img src="/images/lupa.png">
 		</button>
@@ -18,20 +18,21 @@
 		<tr>
 			<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
 			<td id="tema">(<%= quizes[i].tema %>)</td>
-
-			<td><a href="/quizes/<%= quizes[i].id %>/edit"><button> editar </button></a></td>
-			<td>
-				<form action="/quizes/<%= quizes[i].id %>?_method=delete" method="post" >
-					<button type="submit" title="Borra Registro" alt="Boton de Borrado" 	onClick="return confirm('Borrar: <%= quizes[i].pregunta %>?');" />
-					 Borrar
-					</button>
-				</form>
-			</td>
-
+			<% if ( session.user ) { %>
+				<td><a href="/quizes/<%= quizes[i].id %>/edit"><button> editar </button></a></td>
+					<td>
+					<form action="/quizes/<%= quizes[i].id %>?_method=delete" method="post" >
+						<button type="submit" title="Borra Registro" alt="Boton de Borrado" 	onClick="return confirm('Borrar: <%= quizes[i].pregunta %>?');" />
+						 Borrar
+						</button>
+					</form>
+				</td>
+			<% } %>
 		</tr>
 	<% } %>
 </table>
-
-<a href="/quizes/new">
-	<button type="button">Crear Pregunta</button>
-</a>
+<% if ( session.user ) { %>
+	<a href="/quizes/new">
+		<button type="button">Crear Pregunta</button>
+	</a>
+<% } %>	

@@ -1,3 +1,9 @@
+// Paso 17 - Autorización - Accesos HTTP Restringidos
+exports.loginRequired=function( req, res, next) {
+	if ( req.session.user ) { next(); }
+	else { res.redirect('/login'); }
+};
+
 // Paso 16 - Autenticación y Sesión
 // GET /login - Formulario
 exports.new = function(req, res) {
