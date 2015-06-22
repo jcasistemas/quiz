@@ -16,7 +16,22 @@
 <p><strong>Comentarios: </strong></p>
 <div id="comentarios">
 	<%for( index in quiz.Comments) { %> 
-		<p>- <%= quiz.Comments[index].texto %></p>
+
+		<% if( quiz.Comments[index].publicado || session.user ) { %>
+			<p>- <%= quiz.Comments[index].texto %></p>
+			<% if (session.user ) { %> 
+				<% if( quiz.Comments[index].publicado) { %>
+					<a href="/quizes/<%= quiz.id %>/comments/<%= quiz.Comments[index].id %>/unpublish" >
+						<button id="siPub">No Publicar</button>
+					</a>
+				<% } else { %>
+					<a href="/quizes/<%= quiz.id %>/comments/<%= quiz.Comments[index].id %>/publish" >
+						<button id="noPub">Publicar</button>
+					</a>					
+				<% } %>		
+			<% } %>		
+		<% } %>				
+
 	<% } %>
 </div>
 <p><a href="/quizes"><button>Regresar a las preguntas</button></a>

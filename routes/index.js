@@ -18,6 +18,10 @@ router.get('/', function(req, res) {
 // Autoload de comandos con el parametro :quizId
 router.param('quizId', quizController.load);
 
+// Paso 18 - Moderación de Comentarios	
+// Autoload de comandos con el parametro :commentId
+router.param('commentId', commentController.load);
+
 //Paso 16 - Autenticación y Sesión
 router.get('/login', 	sessionController.new); // Formulario Inicio Sesión (Login)
 router.post('/login', 	sessionController.create); // Crear Sesion
@@ -43,6 +47,11 @@ router.delete('/quizes/:quizId(\\d+)',		quizController.destroy);
 // Paso 15 - Crear comentarios
 router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments',   commentController.create);
+// Paso 18 - Moderación de Comentarios	
+router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', 
+										sessionController.loginRequired, commentController.publish);
+router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/unpublish', 
+										sessionController.loginRequired, commentController.unpublish);
 
 // colocar buscador (Fin Tema 9)
 router.get('/quizes/search',                quizController.buscar);
