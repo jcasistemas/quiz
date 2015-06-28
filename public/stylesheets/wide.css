@@ -54,3 +54,9 @@ footer {
 #cvideo {
 	max-width: 95%;
 }
+
+/* Menu */
+#n1 button {
+	width: 90%;	
+	margin: 10px 0;
+}

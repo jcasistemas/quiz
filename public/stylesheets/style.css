@@ -124,12 +124,12 @@ input#consulta {
 
 
 /* Errores */
-#ErrorMsgs {
+.ErrorMsgs {
 	line-height: 1.5em;
 	color:#f61;
 	font-size: smaller;
 }
-#ErrorMsgs>span:first-child { font-weight: 600; }
+.ErrorMsgs>span:first-child { font-weight: 600; }
 
 #Incorrecto, #Error {
 	color: red;
@@ -156,15 +156,24 @@ option {
 #comentarios { color: darkblue; }
 
 /* Session */
-
 .right {
 	float: right;
 	margin-right: 5px;
 	margin-top: 1.7em;
 	background-color: white;
-	padding: 0 0.5em;
+	padding: 0 0em;
 }
 
 /* Moderar Comentarios */
-#siPub { background-color: lightgreen; }
-#noPub { background-color: salmon; }
+#siPub, #noPub { margin-left: 10px; }
+#siPub { background-color: lightgreen; } /* Color de Boton para que Administrativo Active Comentario */
+#noPub { background-color: salmon; }     /* Color de Boton para que Administrativo DesActive Comentario */ 
+
+/* Menu */
+.inv { background-color: lightblue;  } /* Color de los Botones que pueden usar los invitados */
+.adm { background-color: lightgreen; } /* Color de los Botones para los Administradores */
+
+button:hover, input[type=submit]:hover {
+	color: darkblue;
+	text-transform: uppercase;
+}

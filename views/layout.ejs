@@ -21,29 +21,31 @@
       <header class="main" id="h1">
 
         <% if (!session.user) { %>
-          <span class="right"><a href="/login">Login</a></span>
+          <span class="right"><a href="/login?l=1"><button class="adm">Login</button></a></span>
         <% } else { %>
-          <span class="right"><%= session.user.username %> | <a href="/logout">Logout</a></span>
+          <span class="right">&nbsp;<%= session.user.username %> | <a href="/logout"><button class="adm">Logout</button></a></span>
         <% } %>
 
         <h2>Quiz<span>: El juego de las preguntas</span></h2>
       </header>
 
       <nav class="main" id="n1" role="navigation">
-        <span><a href="/">Inicio</a></span>
-        <span><a href="/quizes">Preguntas</a></span>
-
-        <span><a href="/quizes/autor">Autores</a></span>
+        <span ><a href="/"><button class="inv">Inicio</button></a></span>
+        <span><a href="/quizes"><button class="inv">Preguntas</button></a></span>
+        <span><a href="/quizes/autor"><button class="inv">Autores</button></a></span>
+        <% if ( true || session.user ) { %>
+          <span><a href="/quizes/estadisticas"><button class="adm">Estadísticas</button></a></span>
+        <% } %>
       </nav>
 
       <section class="main" id="s1">
 
-        <% if( false && errors.length ) { %>
-          <span id="ErrorMsgs"><span>Favor corregir:<br/></span>
+        <% if( (typeof(errors) !== 'undefined') && errors.length ) { %>
+           <span class="ErrorMsgs"><span>ALERTA<br/></span>
             <% for( var i in errors ) { %>
               <span>
-                <%= parseInt(i)+1 %>- <%= errors[i].message %>
-              </span><br>
+                <li><%= errors[i].message %></li>
+              </span>
             <% } %>
           </span>
         <% } %>
@@ -55,13 +57,13 @@
 
       <footer class="main" id="f1">
         <a href='http://wikipedia.org/wiki/Quiz' target='_Blank' id="que">
-          ¿Que es un Quiz?
+          <button class="inv">¿Que es un Quiz?</button>
         </a>
         <a href='http://github.com/jcasistemas/quiz' target='_Blank'>
-          En GitHub
+          <button class="inv">En GitHub</button>
         </a>
         <a href='https://quiz-modulo6.herokuapp.com/' target='_Blank'>
-          En Heroku
+          <button class="inv">En Heroku</button>
         </a>
       </footer>
 

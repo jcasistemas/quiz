@@ -38,7 +38,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Paso 16 - Autenticación y Sesión
 app.use(cookieParser('LaGata'));
-app.use(session());
+
+// Paso 20 - Estadísticas y Caducar Sesión
+// app.use(session());
+app.use( session( {
+        secret: 'LaGata',
+        resave: false,
+        saveUninitialized: true
+} ) );
+
 
 // Paso 12- edit
 app.use( methodOverride('_method') );
@@ -47,15 +55,42 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Paso 16 - Autenticación y Sesión
 app.use( function(req, res, next) {
+console.log("\nGuardando ruta: ", req.path );    
     // Guarda ruta en seesion.redir para usarla luego de hacer login
     if( !req.path.match(/\/login|\/logout/) ) {
         req.session.redir = req.path;
-    }
+    } 
 
     // Hacer visible req.session en las vistas - Variable global locals
     res.locals.session = req.session;
     next();
 })
+
+// Desconectar luego de superar tiempo de inactividad maximo (2 minutos)
+app.use(function (req, res, next) {
+// console.log("\nObjeto req.session: ", req.session);
+console.log("\nObjeto req.session: ", req.session);
+    var maximoTiempoInactividad = 30000; // En milisegundos
+    if ( req.session.user  ) {
+console.log("\nCON SESION !!! ...\nDatos de Sesion: ", req.session.user );
+      var horaCreadaSesion = new Date(req.session.user.horaCreada);
+
+      if ( (new Date() - horaCreadaSesion) > maximoTiempoInactividad ) {
+        // eliminar la sesión luego de N segundos de inactividad
+        req.session.estado.expirada = true ;        
+        delete req.session.user;
+console.log("\nSesion Terminada, Ir a: ", req.session.redir.toString(), "\n")
+        // res.redirect( req.session.redir.toString()); // Redirecciona a la ruta llamada
+      } else {
+        // Colocar hora actual para empezar a contar N segs. de Inactividad
+        req.session.user.horaCreada = new Date();
+        req.session.estado.expirada = false;                
+      }
+    } else {
+      console.log("\n\nSIN SESION !!! ...\n" );
+    }
+    next();
+});
 
 app.use('/', routes);
 
@@ -93,7 +128,11 @@ app.use(function(err, req, res, next) {
     });
 });
 
+app.listen(8000);
+
 module.exports = app;
 
-console.log("\nSi inicia con foreman use: http://localhost/5000");
-console.log("Si inicia con node use: http://localhost/3000\n");
+console.log("\n\t* Si inicia con foreman use: http://localhost:5000");
+console.log("\n\t* Si inicia con node use: http://localhost:3000");
+console.log("\n\t\tO indistintamente utilizar: http://localhost:8000\n");
+console.log("\n\t* Para usar Servidor seguro utilizar: https://localhost/8443\n");

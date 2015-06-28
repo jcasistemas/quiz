@@ -1,16 +1,24 @@
+<% if( (typeof(session.estado) !== 'undefined') ) { 
+   	if (session.estado.expirada ) { %>
+          <li class="ErrorMsgs">La sesión ha expirado, introduzca nuevamente sus datos</li><br>
+	<% } %>          
+<% } else {
+	console.log( "\n*** NO Exp=", session.user );
+} %>
+
 <h2>Login</h2>
 
 <form action="/login" method="POST">
 	<div class="field">
 		<label for="login">Login:</label><br>
-		<input type="text" id="login" name="login" size="30" />
+		<input type="text" id="login" name="login" size="30" value="<%= login %>" placeholder="Tu Nombre de usuario" />
 	</div>
 
 	<div class="field">
 		<label for="password">Password:</label><br>
-		<input type="text" id="password" name="password" size="30" />
+		<input type="text" id="password" name="password" size="30" placeholder="Tu Clave" />
 	</div>
 	<div class="actions">
-		<input type="submit" name="commit" value="login" />
+		<input type="submit" name="commit" value="login" class="adm" />
 	</div>
 </form>

@@ -1,8 +1,8 @@
 var models = require('../models/models.js');
 
-// Paso 18 - Moderación de Comentarios	
+// Paso 18 - Moderación de Comentarios
 exports.load = function(req, res, next, commentId) {
-  models.Comment.find( 
+  models.Comment.find(
 	  	{ where: { id: Number(commentId) }
 	  	}
 
@@ -39,7 +39,7 @@ exports.create = function(req, res) {
 			comment.save()
 			.then(function() { res.redirect('/quizes/' + req.params.quizId ) } )
 		}
-		
+
 	}).catch(function(error){ console.log("\n\nError en Comentario !!!\n\n"); });
 };
 
@@ -61,4 +61,9 @@ exports.unpublish = function(req, res) {
 	.catch( function( error ) { next( error) });
 };
 
-
+// DELETE /quizes/:quizId/comments/:commentId/delete
+exports.destroy = function( req, res) {
+	req.comment.destroy().then( function() {
+		res.redirect('/quizes/'+ req.params.quizId );
+	}).catch(function(error){ next(error)});
+};

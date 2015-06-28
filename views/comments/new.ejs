@@ -3,8 +3,8 @@
 <form method="post" action="/quizes/<%= quizId %>/comments" id="comm">
 	<input type="text" id="comment" name="comment[texto]" value="" placeholder="Su comentario"> 
 	<input type="hidden" value="<%= pregunta %>" name="pregunta"/>	
-	<button type="submit">Guardar comentario</button>
+	<button type="submit" class="inv">Guardar comentario</button>
 </form>
-<p><a href="/quizes/<%= quizId%>"><button>Retornar a la pregunta</button></a>
+<p><a href="/quizes/<%= quizId%>"><button class="inv">Retornar a la pregunta</button></a>
 
 

@@ -3,14 +3,15 @@ var models = require('../models/models.js'); // Dirección del modelo
 
 // Autoload - Se refactoriza el código si la ruta incluye :quizId
 exports.load = function(req, res, next, quizId) {
-  models.Quiz.find( 
+  models.Quiz.find(
 	  	{ where: { id: Number(quizId) },
-	  	  include: [ { model:models.Comment}]
+	  	  include: [ { model:models.Comment}]   // Se incluye la tabla con el nombre definido en el modelo
 	  	}
 
   	).then( function(quiz) {
       if (quiz) {
         req.quiz = quiz;
+
         next();
       }
       else {
@@ -56,6 +57,7 @@ exports.create = function(req, res) {
 	// Funciona al Instalar sequielize@2.0.0
 	quiz.validate().then( function(err){
 			if( err ) {
+console.log("\nerr.errors= ", err.errors );
 				res.render('quizes/new', {quiz: quiz, errors: err.errors} );
 			} else {
 				// Quitar espacios al comienzo y al final de lo enviado en el formulario
@@ -93,7 +95,7 @@ exports.update = function( req, res) {
         res.render('quizes/edit', {quiz: req.quiz, errors: err.errors} );
       } else {
         req.quiz.save( { fields: ["pregunta", "respuesta", "tema"] } ).then(function() {
-          res.redirect('/quizes' ) } )
+        res.redirect('/quizes' ) } )
       }
     }
   );

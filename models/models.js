@@ -38,7 +38,12 @@ var comment_path = path.join(__dirname,'comment');
 var Comment = sequelize.import(comment_path);
 // Crear la relación entre las 2 tablas
 Comment.belongsTo(Quiz);  // Relación 1-1
-Quiz.hasMany(Comment);    // Relación 1 a N
+Quiz.hasMany(Comment, {     // Relación 1 a N
+  'constraints': true,      // Relacionar la pregunta con los comentarios (Actualizar/Borrar en Cascada)
+  'onUpdate': 'cascade',
+  'onDelete': 'cascade',
+  'hooks': true
+});
 exports.Quiz = Quiz; // exportar definición de tabla Quiz para usarla en otros lugares de la aplicacion
 exports.Comment = Comment; // exportar definición de tabla Comment para usarla en otros lugares de la aplicacion
 

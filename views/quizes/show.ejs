@@ -2,36 +2,48 @@
 	<form action="/quizes/<%= quiz.id %>/respuesta" method="get" >
 		<p class="subtitulo">Pregunta:  ¿<%= quiz.pregunta %> ?</p></br>
 		<input type="text" name="respuesta" placeholder="Respuesta ..." />
-		<input type="submit" value="Responder" />
+		<input type="submit" value="Responder" class="inv" />
 	</form>
 </div>
 
 <p>
 <form action="/quizes/<%= quiz.id %>/comments/new" method="get" >
 	<input type="hidden" value="<%= quiz.pregunta %>" name="pregunta"/>
-	<input type="submit" value="Nuevo comentario"/>
+	<input type="submit" value="Nuevo comentario" class="inv" />
 </form>
 </p>
 
 <p><strong>Comentarios: </strong></p>
 <div id="comentarios">
+
 	<%for( index in quiz.Comments) { %> 
 
 		<% if( quiz.Comments[index].publicado || session.user ) { %>
-			<p>- <%= quiz.Comments[index].texto %></p>
+			<p>- <%= quiz.Comments[index].texto %>
+			<span>	
 			<% if (session.user ) { %> 
 				<% if( quiz.Comments[index].publicado) { %>
 					<a href="/quizes/<%= quiz.id %>/comments/<%= quiz.Comments[index].id %>/unpublish" >
-						<button id="siPub">No Publicar</button>
+						<button id="noPub">No Publicar</button>
 					</a>
 				<% } else { %>
 					<a href="/quizes/<%= quiz.id %>/comments/<%= quiz.Comments[index].id %>/publish" >
-						<button id="noPub">Publicar</button>
+						<button id="siPub">Publicar</button>
 					</a>					
-				<% } %>		
+				<% } %>	
+
+				<form action="/quizes/<%= quiz.id %>/comments/<%= quiz.Comments[index].id %>/delete?_method=delete" method="post" >
+					<button type="submit" title="Borra Comentario" alt="Boton Borrar Comentario" 
+					onClick="return confirm('Borrar: <%= quiz.Comments[index].texto %>?');"  class="adm"/>
+					 Eliminar Comentario
+					</button>
+				</form>
+
+
 			<% } %>		
+			</span>
 		<% } %>				
 
 	<% } %>
 </div>
-<p><a href="/quizes"><button>Regresar a las preguntas</button></a>
+<p><a href="/quizes"><button class="inv">Regresar a las preguntas</button></a>

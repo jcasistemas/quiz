@@ -3,16 +3,16 @@
 <%
 switch( respuesta ) {
 	case "Incorrecto": %>
-		<a href="/quizes/<%= quiz.id %>"><button>Intentelo de nuevo</button></a>
+		<a href="/quizes/<%= quiz.id %>"><button class="inv">Intentelo de nuevo</button></a>
 <%
 		break;
 	case "Correcto": %>
-		<a href="/quizes"><button>Responder mas preguntas</button></a>
+		<a href="/quizes"><button class="inv">Responder mas preguntas</button></a>
 <%
 		break;
 	case "Error": %>
 	    <p id="Error1">No existe la pregunta <%= quizId %><p></br>
-		<a href="/quizes">Ver Preguntas</a>
+		<a href="/quizes"><button class="inv">Ver Preguntas</button></a>
 <%
 		break;
 	default:
